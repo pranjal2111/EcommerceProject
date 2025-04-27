@@ -1,0 +1,57 @@
+{% if messages %}
+{% for i in messages %}
+<script>alert("{{ i }}")</script>
+{% endfor %}
+{% endif %}
+<!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Ezora</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+          <li class="nav-item dropdown">
+           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #f0f0f0; text-decoration: none;">Category</a>
+<ul class="dropdown-menu" style="background-color: #1b263b; border: none;">
+    {% for i in catdata %}
+    <li>
+        <a class="dropdown-item" href="/cateviseproduct/{{ i.id }}" style="color: #f0f0f0; background-color: #23395d; padding: 10px; text-decoration: none;">
+            {{ i.name }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center">
+          {% if request.session.log_name %}
+          <a class="btn btn-outline-light me-2" href="/showcart"><i class="bi bi-cart"></i> Cart</a>
+          <a class="btn btn-outline-light me-2" href="/your-orders">Your Orders</a>
+
+          {% if request.session.log_role == 'seller' %}  <!-- Check if the user is a seller -->
+          <a class="btn btn-outline-light me-2" href="/addproduct">Add Product</a>
+          <a class="btn btn-outline-light me-2" href="/manageproduct">Manage Product</a>
+            {% endif %}
+
+          <a class="btn btn-outline-light me-2" href="/logout">Logout</a>
+          <div class="user-info ms-3">
+    {% if request.session.profile_picture %}
+        <img src="{{ request.session.profile_picture }}" alt="User " width="32" height="32" class="rounded-circle">
+    {% else %}
+        <img src="https://via.placeholder.com/32" alt="User " width="32" height="32" class="rounded-circle">
+    {% endif %}
+            <span class="text-light">{{ request.session.log_name }}</span>
+          </div>
+          {% else %}
+          <a class="btn btn-outline-light me-2" href="/login">Login</a>
+          <a class="btn btn-outline-light me-2" href="/">Sign Up</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
